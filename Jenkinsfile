@@ -36,7 +36,7 @@ pipeline{
             }
         stage('run dockerfile'){
           steps{
-               sh 'docker build -t myimg .'
+               sh 'docker build -t riya0201/bankingproject:latest .'
            }
          }
         
@@ -49,7 +49,7 @@ pipeline{
             }
        stage('Push the Docker image') {
          steps {
-           sh 'docker push riya0201/myimg:latest'
+           sh 'docker push riya0201/bankingproject:latest'
                                 } 
     }
         stage('Ansbile config and Deployment') {
