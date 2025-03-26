@@ -42,21 +42,22 @@ pipeline{
             steps{
                 sh 'docker run -dt -p 8091:8091 --name c000 myimg'
             }
+        }
         stage('Login to Dockerhub') {
-      steps {
-        withCredentials([usernamePassword(credentialsId: 'docker-id-user', passwordVariable: 'dockerpass', usernameVariable: 'dockeruser')]) {
-        sh 'docker login -u ${dockeruser} -p ${dockerpass}'
+          steps {
+            withCredentials([usernamePassword(credentialsId: 'docker-id-user', passwordVariable: 'dockerpass', usernameVariable: 'dockeruser')]) {
+            sh 'docker login -u ${dockeruser} -p ${dockerpass}'
                                           }
                           }
             }
-    stage('Push the Docker image') {
-      steps {
-        sh 'docker push riya0201/myimg:latest'
+       stage('Push the Docker image') {
+         steps {
+           sh 'docker push riya0201/myimg:latest'
                                 } 
     }
         stage('Ansbile config and Deployment') {
-      steps {
-        ansiblePlaybook credentialsId: 'sshkey', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'deploy.yml', vaultTmpPath: ''     
+          steps {
+            ansiblePlaybook credentialsId: 'sshkey', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'deploy.yml', vaultTmpPath: ''     
         }   
     }
 }
