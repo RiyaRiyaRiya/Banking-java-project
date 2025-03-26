@@ -38,11 +38,7 @@ pipeline{
                sh 'docker build -t myimg .'
            }
          }
-        stage('port expose'){
-            steps{
-                sh 'docker run -dt -p 8091:8091 --name c000 myimg'
-            }
-        }
+        
         stage('Login to Dockerhub') {
           steps {
             withCredentials([usernamePassword(credentialsId: 'docker-id-user', passwordVariable: 'dockerpass', usernameVariable: 'dockeruser')]) {
